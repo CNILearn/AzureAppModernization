@@ -9,7 +9,7 @@ Hands-on lab step-by-step guide
 </div>
 
 <div class="MCWHeader3">
-October 2021
+November 2023
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -19,6 +19,8 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
 © 2021 Microsoft Corporation. All rights reserved.
+
+Updates Nov-2023, CN innovation
 
 Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -166,21 +168,23 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
     ![The WebVM virtual machine is highlighted in the list of resources.](media/webvm-selection.png "WebVM Selection")
 
-2. Go back to the Azure Portal. On the WebVM Virtual Machine's **Overview** blade, select **Connect (1)** and **RDP (2)** on the top menu.
+2. Go back to the Azure Portal. On the WebVM Virtual Machine's **Overview** blade, select **Connect** and **Connect** on the top menu.
 
-   ![The WebVM VM blade is displayed, with the Connect button highlighted in the top menu.](media/connect-rdp-webvm.png "WebVM RDP Connect")
+   ![The WebVM VM blade is displayed, with the Connect button highlighted in the top menu.](media/connect-rdp-webvm.png "WebVM Connect")
 
-3. Select **Download RDP File** on the next page, and open the downloaded file.
+3. Select **Native RDP**, and click the **Select** button.
 
-    > **Note**: The first time you connect to the WebVM Virtual Machine, you will see a blue pop-up terminal dialog taking you through a couple of software installs. Don't be alarmed, and wait until the installs are complete.
+    ![Select Native RDP to download.](media/native-rdp.png "Native RDP")
 
-    ![RDP Window is open. Download RDP File button is highlighted.](media/rdp-download.png "WebVM RDP File Download")
+4. Select **Download RDP File** to download the RDP file to your local machine.
 
-4. Select **Connect** on the Remote Desktop Connection dialog.
+    ![Native RDP Window is open. Download RDP File button.](media/rdp-download.png "WebVM RDP File Download")
+
+5. Open the download file. Select **Connect** on the Remote Desktop Connection dialog.
 
     ![In the Remote Desktop Connection Dialog Box, the Connect button is highlighted.](media/remote-desktop-connection-webvm.png "Remote Desktop Connection dialog")
 
-5. Enter the following credentials with your password when prompted, and then select **OK**:
+6. With the authentication, select **More choices**, and enter the following credentials with your password when prompted, and then select **OK**:
 
    - **Username**: demouser
    - **Password**: {YOUR-ADMIN-PASSWORD}
@@ -189,34 +193,38 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
     ![The credentials specified above are entered into the Enter your credentials dialog.](media/rdp-credentials-webvm.png "Enter your credentials")
 
-6. Select **Yes** to connect, if prompted that the identity of the remote computer cannot be verified.
+7. Select **Yes** to connect, if prompted that the identity of the remote computer cannot be verified.
 
     ![In the Remote Desktop Connection dialog box, a warning states that the remote computer's identity cannot be verified and asks if you want to continue anyway. At the bottom, the Yes button is circled.](media/remote-desktop-connection-identity-verification-webvm.png "Remote Desktop Connection dialog")
 
-7. Once logged into the WebVM VM, a script will execute to install the various items needed for the remaining lab steps.
+8. Once logged into the WebVM VM, a script will execute to install the various items needed for the remaining lab steps.
     >**Warning:** You must wait for all of the scripts to finish installing and configuring the software when you first log in. DO NOT shutdown the PowerShell script.  The PowerShell script creates the database and seeds the tables with data. Failing to wait for the script to complete will prevent you from finishing the rest of the lab.
 
     ![The image shows the Windows PowerShell opening screen.](media/windows-powershell.png "PowerShell Opening Screen")
 
-8. Once the PowerSell script has completed, the web server should be configured now. Return to the Azure Portal, on the WebVM Virtual Machine's **Overview (1)** blade, copy the **Public IP address (2)**.
+9. Once the PowerSell script has completed, the web server should be configured now. Return to the Azure Portal, on the WebVM Virtual Machine's **Overview (1)** blade, copy the **Public IP address (2)**.
 
     ![The WebVM VM blade is displayed, Public IP Address copy button is highlighted.](media/web-vm-ip.png "WebVM Overview and Public IP")
 
-9. Open a new browser window and navigate to the IP Address you copied.
+10. Open a new browser window and navigate to the IP Address you copied.
 
     >**Note:** If you cannot see the web page properly display, then your web server configuration may be incorrect.
 
     ![The WebVM VM blade is displayed, Public IP Address copy button is highlighted.](media/parts-umlimited-web-site.png "Parts Unlimited Web Site")
 
-10. Once the script completes, open **AppServiceMigrationAssistant** that is located on the desktop.
+11. Download the Edge browser from https://www.microsoft.com/en-us/edge/download and install it.
 
-    ![AppServiceMigrationAssistant is highlighted on the desktop.](media/appservicemigrationassistant-desktop.png "App Service Migration Assistant")
+12. Set Edge as the default web browser.
 
-11. Once App Service Migration Assistant discovers the websites available on the server, choose **Default Web Site (1)** for migration and select **Next (2)** to start the assessment.
+![Set Edge as default web browser](media/set-edge-browser.png "Edge as default web browser")
+
+13. Download and install the **AppServiceMigrationAssistant** from https://azure.microsoft.com/en-us/products/app-service/migration-tools/ and run it.
+
+14. Once App Service Migration Assistant discovers the websites available on the server, choose **Default Web Site (1)** for migration and select **Next (2)** to start the assessment.
 
     ![AppServiceMigrationAssistant is open. Default Web Site is selected. The next button is highlighted.](media/appservicemigration-choose-site.png "App Service Migration Assistant Web Site selection")
 
-12. Observe the result of the assessment report. In our case, our application has successfully passed 13 tests **(1)** with no additional actions needed. Now that our assessment is complete, select **Next (2)** to proceed to the migration.
+15. Observe the result of the assessment report. In our case, our application has successfully passed 13 tests **(1)** with no additional actions needed. Now that our assessment is complete, select **Next (2)** to proceed to the migration.
 
    ![Assessment report result is shown. There are 13 success metrics presented. The next button is highlighted.](media/appservicemigration-report.png "Assessment Report")
 
@@ -230,42 +238,34 @@ After reviewing the assessment results, you have ensured the web application is 
 
    ![Azure App Service Migration Assistant's Azure Login dialog is open. A device code is presented. Copy Code & Open Browser button is highlighted.](media/appservicemigration-azure-login.png "Azure Login")
 
-2. At its first launch, you will be asked to choose a browser. Select **Microsoft Edge (1)**  and check **Always use this app (2)** checkbox. Select **OK (2)** to move to the next step.
-
-    ![Browser choice dialog is shown. Microsoft Edge is selected. Always use this app checkbox is checked. OK button is highlighted.](media/browser-choice.png "Default Browser Selection")
-
-3. Right-click the text box and select **Paste (1)** to paste your login code. Select **Next** to give subscription access to App Service Migration Assistant.
+2. Right-click the text box and select **Paste (1)** to paste your login code. Select **Next** to give subscription access to App Service Migration Assistant.
 
     ![Azure Code Login website is open. Context menu for the code textbox is shown. Paste command from the context menu is highlighted. The next button is highlighted as a second step. ](media/appservicemigration-azure-login-code.png "Enter Authentication Code")
 
-4. Continue the login process with your Azure Subscription credentials. When you see the message that says **You have signed in to the Azure App Service Migration Assistant application on your device** close the browser window and return to the App Service Migration Assistant.
+3. Continue the login process with your Azure Subscription credentials. When you see the message that says **You have signed in to the Azure App Service Migration Assistant application on your device** close the browser window and return to the App Service Migration Assistant. You might need to switch the user directory to see the *Azure Migrate Project*.
 
     ![Azure Login process is complete. A message dialog is shown that indicates the login process is a success.](media/appservicemigration-azure-login-complete.png "App Service Migration Assistant authentication approval")
 
-5. Select the Azure Migrate project we created **(1)** in the previous exercise to submit our migration results. Select **Next** to continue.
+4. Select the Azure Migrate project we created **(1)** in the previous exercise to submit our migration results. Select **Next** to continue.
     >**Note:** If you do not see your Azure Migrate Project, you may have switch user directory (subscriptions) to the directory where the project was created.
 
     ![Azure Migrate Project is set to partsunlimitedweb. The next button is highlighted.](media/appservicemigration-azure-migrate.png "Azure Migrate Hub integration")
 
-6. Verify you are in the correct subscription. In order to migrate Parts Unlimited website, we have to create an App Service Plan. The Azure App Service Migration Assistant will take care of all the requirements needed. Select **Use existing (1)** and select the lab resource group as your deployment target. App Service requires a globally unique Site Name. We suggest using a pattern that matches `partsunlimited-web-{uniquesuffix}` **(2)**. Select **Migrate** to start the migration process.
+5. Verify you are in the correct subscription. In order to migrate Parts Unlimited website, we have to create an App Service Plan. The Azure App Service Migration Assistant will take care of all the requirements needed. Select **Use existing (1)** and select the lab resource group as your deployment target. App Service requires a globally unique Site Name. We suggest using a pattern that matches `partsunlimited-web-{uniquesuffix}` **(2)**. Select **Migrate** to start the migration process.
 
     ![Deployment options are presented. The existing lab resource group is selected as the destination. The destination site name is set to partsunlimited-web-20X21. Migrate button is highlighted.](media/appservicemigration-migrate.png "Azure App Service Migration Assistant Options")
 
     ![The image shows the migration steps progress.](media/app-service-migration-progress.png "App migration progress")
 
-7. Verify your migration. Select **Go to your website**.
+6. Verify your migration. Select **Go to your website**.
 
     ![The image shows a successful migration results message. The Go to your website button is highlighted.](media/azure-migrate-verify-app-svc-migration.png "Successful Migration Results")
 
-    > **Warning:** If your migration fails with a **WindowsWorkersNotAllowedInLinuxResourceGroup (1)** try the migration process again, but this time selecting a different Resource Group for your deployment. If that is not possible, select a different Region.  
-    >
-    > ![Migration failed error screen is shown. WindowsWorkersNotAllowedInLinuxResourceGroup message is highlighted.](media/app-migration-windowsworkersnotallowed.png "Migration failed")
-
-8. We have just completed the Parts Unlimited website's migration from IIS on a Virtual Machine to Azure App Service. Congratulations. Let's go back to the Azure Portal and look into Azure Migrate. Search for `migrate` **(1)** on the Azure Portal and select **Azure Migrate (2)**.
+7. We have just completed the Parts Unlimited website's migration from IIS on a Virtual Machine to Azure App Service. Congratulations. Let's go back to the Azure Portal and look into Azure Migrate. Search for `migrate` **(1)** on the Azure Portal and select **Azure Migrate (2)**.
 
     ![Azure Portal is open. The search box is filled with the migrate keyword. Azure Migrate is highlighted from the result list.](media/find-azure-migrate.png "Azure Migrate on Azure Portal Search")
 
-9. Verify your migrations.
+8. Verify your migrations.
     - Select the **Web Apps** section. View the number of discovered web servers, assessed websites.
     - Select the **Refresh** button.
     - View the assessed and migrated websites. Keep in mind that you might need to wait for 5 to 10 minutes for results to show up.
