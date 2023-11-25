@@ -2,6 +2,23 @@ param (
     [Parameter(Mandatory=$False)] [string] $SqlPass = ""
 )
 
+# Disable Internet Explorer Enhanced Security Configuration
+function Disable-InternetExplorerESC {
+    $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
+    $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
+    Set-ItemProperty -Path $AdminKey -Name "IsInstalled" -Value 0 -Force
+    Set-ItemProperty -Path $UserKey -Name "IsInstalled" -Value 0 -Force
+    Stop-Process -Name Explorer -Force
+    Write-Host "IE Enhanced Security Configuration (ESC) has been disabled." -ForegroundColor Green
+}
+
+# Disable IE ESC
+Disable-InternetExplorerESC
+
+# Downloading Deferred Installs
+# Download Edge 
+(New-Object System.Net.WebClient).DownloadFile('https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/e2d06b69-9e44-45e1-bdf5-b3b827fe06b2/MicrosoftEdgeEnterpriseX64.msi', 'C:\MicrosoftEdgeEnterpriseX64.msi')
+
 # Enable SQL Server ports on the Windows firewall
 function Add-SqlFirewallRule {
     $fwPolicy = $null
