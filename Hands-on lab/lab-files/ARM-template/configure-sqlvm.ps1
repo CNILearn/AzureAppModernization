@@ -80,6 +80,23 @@ Wait-Install
 (New-Object System.Net.WebClient).DownloadFile('https://download.microsoft.com/download/C/6/3/C63D8695-CEF2-43C3-AF0A-4989507E429B/DataMigrationAssistant.msi', 'C:\DataMigrationAssistant.msi')
 Start-Process -file 'C:\DataMigrationAssistant.msi' -arg '/qn /l*v C:\dma_install.txt' -passthru | wait-process
 
+# Wait for the database to be online
+
+function Waitfor-Database {
+    $serverName = 'SQLSERVER2017'
+    
+    # Wait for the database to be online
+    do {
+        $status = Invoke-Sqlcmd -Query "SELECT DATABASEPROPERTYEX('master', 'STATUS')" -ServerInstance $serverName
+        Write-Host "The database is $($status.Status). Waiting for it to be online..."
+        Start-Sleep -Seconds 1
+    } until ($status.Status -eq "ONLINE")
+    
+    Write-Host "The database is now online."
+}
+
+Waitfor-Database
+
 # Attach the downloaded backup files to the local SQL Server instance
 function Setup-Sql {
     $ServerName = 'SQLSERVER2017'
