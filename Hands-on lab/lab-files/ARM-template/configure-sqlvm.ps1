@@ -2,19 +2,6 @@ param (
     [Parameter(Mandatory=$False)] [string] $SqlPass = ""
 )
 
-# Disable Internet Explorer Enhanced Security Configuration
-function Disable-InternetExplorerESC {
-    $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
-    $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
-    Set-ItemProperty -Path $AdminKey -Name "IsInstalled" -Value 0 -Force
-    Set-ItemProperty -Path $UserKey -Name "IsInstalled" -Value 0 -Force
-    Stop-Process -Name Explorer -Force
-    Write-Host "IE Enhanced Security Configuration (ESC) has been disabled." -ForegroundColor Green
-}
-
-# Disable IE ESC
-Disable-InternetExplorerESC
-
 # Enable SQL Server ports on the Windows firewall
 function Add-SqlFirewallRule {
     $fwPolicy = $null
@@ -52,9 +39,9 @@ Start-Process -file 'C:\DataMigrationAssistant.msi' -arg '/qn /l*v C:\dma_instal
 # Attach the downloaded backup files to the local SQL Server instance
 function Setup-Sql {
     #Add snap-in
-    Add-PSSnapin SqlServerCmdletSnapin* -ErrorAction SilentlyContinue
+    # Add-PSSnapin SqlServerCmdletSnapin* -ErrorAction SilentlyContinue
 
-    $ServerName = 'SQLSERVER2008'
+    $ServerName = 'SQLSERVER2017'
     $DatabaseName = 'PartsUnlimited'
     
     $Cmd = "USE [master] CREATE DATABASE [$DatabaseName]"
