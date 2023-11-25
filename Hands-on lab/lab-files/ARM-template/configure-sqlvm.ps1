@@ -12,12 +12,34 @@ function Disable-InternetExplorerESC {
     Write-Host "IE Enhanced Security Configuration (ESC) has been disabled." -ForegroundColor Green
 }
 
+function Wait-Install {
+    $msiRunning = 1
+    $msiMessage = ""
+    while($msiRunning -ne 0)
+    {
+        try
+        {
+            $Mutex = [System.Threading.Mutex]::OpenExisting("Global\_MSIExecute");
+            $Mutex.Dispose();
+            $DST = Get-Date
+            $msiMessage = "An installer is currently running. Please wait...$DST"
+            Write-Host $msiMessage 
+            $msiRunning = 1
+        }
+        catch
+        {
+            $msiRunning = 0
+        }
+        Start-Sleep -Seconds 1
+    }
+}
+
+# To resolve the error of https://github.com/microsoft/MCW-App-modernization/issues/68. The cause of the error is Powershell by default uses TLS 1.0 to connect to website, but website security requires TLS 1.2. You can change this behavior with running any of the below command to use all protocols. You can also specify single protocol.
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Ssl3
+[Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Ssl3"
+
 # Disable IE ESC
 Disable-InternetExplorerESC
-
-# Downloading Deferred Installs
-# Download Edge 
-(New-Object System.Net.WebClient).DownloadFile('https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/e2d06b69-9e44-45e1-bdf5-b3b827fe06b2/MicrosoftEdgeEnterpriseX64.msi', 'C:\MicrosoftEdgeEnterpriseX64.msi')
 
 # Enable SQL Server ports on the Windows firewall
 function Add-SqlFirewallRule {
@@ -44,20 +66,22 @@ function Add-SqlFirewallRule {
 Add-SqlFirewallRule
 
 #download .net 4.8
-Start-BitsTransfer -Source 'https://go.microsoft.com/fwlink/?linkid=2088631'  -Destination "$Env:Temp\Net4.8.exe"; 
+(New-Object System.Net.WebClient).DownloadFile('https://go.microsoft.com/fwlink/?linkid=2088631', 'C:\Net4.8.exe')
 
 #install .net 4.8
-start-process "$Env:Temp\Net4.8.exe" -args "/q /norestart" -wait
+start-process "C:\Net4.8.exe" -args "/q /norestart" -wait
+
+# Download Edge 
+Wait-Install
+(New-Object System.Net.WebClient).DownloadFile('https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/e2d06b69-9e44-45e1-bdf5-b3b827fe06b2/MicrosoftEdgeEnterpriseX64.msi', 'C:\MicrosoftEdgeEnterpriseX64.msi')
 
 # Download and install Data Migration Assistant
+Wait-Install
 (New-Object System.Net.WebClient).DownloadFile('https://download.microsoft.com/download/C/6/3/C63D8695-CEF2-43C3-AF0A-4989507E429B/DataMigrationAssistant.msi', 'C:\DataMigrationAssistant.msi')
 Start-Process -file 'C:\DataMigrationAssistant.msi' -arg '/qn /l*v C:\dma_install.txt' -passthru | wait-process
 
 # Attach the downloaded backup files to the local SQL Server instance
 function Setup-Sql {
-    #Add snap-in
-    # Add-PSSnapin SqlServerCmdletSnapin* -ErrorAction SilentlyContinue
-
     $ServerName = 'SQLSERVER2017'
     $DatabaseName = 'PartsUnlimited'
     
