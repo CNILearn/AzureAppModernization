@@ -65,31 +65,16 @@ function Add-SqlFirewallRule {
 
 Add-SqlFirewallRule
 
-#download .net 4.8
-(New-Object System.Net.WebClient).DownloadFile('https://go.microsoft.com/fwlink/?linkid=2088631', 'C:\Net4.8.exe')
-
-#install .net 4.8
-start-process "C:\Net4.8.exe" -args "/q /norestart" -wait
-
-# Download Edge 
-Wait-Install
-(New-Object System.Net.WebClient).DownloadFile('https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/e2d06b69-9e44-45e1-bdf5-b3b827fe06b2/MicrosoftEdgeEnterpriseX64.msi', 'C:\MicrosoftEdgeEnterpriseX64.msi')
-
-# Download and install Data Migration Assistant
-Wait-Install
-(New-Object System.Net.WebClient).DownloadFile('https://download.microsoft.com/download/C/6/3/C63D8695-CEF2-43C3-AF0A-4989507E429B/DataMigrationAssistant.msi', 'C:\DataMigrationAssistant.msi')
-Start-Process -file 'C:\DataMigrationAssistant.msi' -arg '/qn /l*v C:\dma_install.txt' -passthru | wait-process
-
 # Wait for the database to be online
-
 function Waitfor-Database {
-    $serverName = 'SQLSERVER2017'
+    $serverName = 'localhost'
     
     # Wait for the database to be online
     do {
-        $status = Invoke-Sqlcmd -Query "SELECT DATABASEPROPERTYEX('master', 'STATUS')" -ServerInstance $serverName
-        Write-Host "The database is $($status[0]). Waiting for it to be online..."
+        Write-Host "Waiting for the database to be oline..."
         Start-Sleep -Seconds 1
+        $status = Invoke-Sqlcmd -Query "SELECT DATABASEPROPERTYEX('master', 'STATUS')" -ServerInstance $serverName
+        Write-Host "The database is $($status[0])."
     } until ($status[0] -eq "ONLINE")
     
     Write-Host "The database is now online."
@@ -97,13 +82,12 @@ function Waitfor-Database {
 
 Waitfor-Database
 
-# Attach the downloaded backup files to the local SQL Server instance
 function Setup-Sql {
-    $ServerName = 'SQLSERVER2017'
+    $ServerName = 'localhost'
     $DatabaseName = 'PartsUnlimited'
-    
-    $Cmd = "USE [master] CREATE DATABASE [$DatabaseName]"
-    Invoke-Sqlcmd $Cmd -QueryTimeout 3600 -ServerInstance $ServerName
+      
+    $Cmd = "CREATE DATABASE [$DatabaseName]"
+    Invoke-Sqlcmd -Query $Cmd -QueryTimeout 3600 -ServerInstance $ServerName -Database 'master'
 
     Invoke-Sqlcmd "ALTER DATABASE [$DatabaseName] SET DISABLE_BROKER;" -QueryTimeout 3600 -ServerInstance $ServerName
     
@@ -120,3 +104,19 @@ function Setup-Sql {
 }
 
 Setup-Sql
+
+#download and install .net 4.8
+(New-Object System.Net.WebClient).DownloadFile('https://go.microsoft.com/fwlink/?linkid=2088631', 'C:\Net4.8.exe')
+
+Wait-Install
+start-process "C:\Net4.8.exe" -args "/q /norestart" -wait
+
+# Download and install Edge Chromium
+(New-Object System.Net.WebClient).DownloadFile('http://go.microsoft.com/fwlink/?LinkID=2093437', 'C:\MicrosoftEdgeEnterpriseX64.msi')
+Wait-Install
+Start-Process -file 'C:\MicrosoftEdgeEnterpriseX64.msi' -arg '/qn /l*v C:\edge_install.txt' -passthru | wait-process   
+
+# Download and install Data Migration Assistant
+Wait-Install
+(New-Object System.Net.WebClient).DownloadFile('https://download.microsoft.com/download/C/6/3/C63D8695-CEF2-43C3-AF0A-4989507E429B/DataMigrationAssistant.msi', 'C:\DataMigrationAssistant.msi')
+Start-Process -file 'C:\DataMigrationAssistant.msi' -arg '/qn /l*v C:\dma_install.txt' -passthru | wait-process
