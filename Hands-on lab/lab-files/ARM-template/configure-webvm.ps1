@@ -42,7 +42,7 @@ Disable-InternetExplorerESC
 
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
 
-$branchName = "main"
+$branchName = "2023"
 
 # Download and extract the starter solution files
 # ZIP File sometimes gets corrupted
@@ -50,7 +50,7 @@ Write-Host "Downloading MCW-App-modernization from GitHub" -ForegroundColor Gree
 New-Item -ItemType directory -Path C:\MCW
 while((Get-ChildItem -Directory C:\MCW | Measure-Object).Count -eq 0 )
 {
-    (New-Object System.Net.WebClient).DownloadFile("https://github.com/microsoft/MCW-App-modernization/zipball/$branchName", 'C:\MCW.zip')
+    (New-Object System.Net.WebClient).DownloadFile("https://github.com/CNILearn/AzureAppModernization/zipball/$branchName", 'C:\MCW.zip')
     Expand-Archive -LiteralPath 'C:\MCW.zip' -DestinationPath 'C:\MCW' -Force
 }
 
@@ -69,7 +69,7 @@ Write-Host "Server=$SqlIP;Database=PartsUnlimited;User Id=PUWebSite;Password=$Sq
 # Download App Service Migration Assistant 
 (New-Object System.Net.WebClient).DownloadFile('https://appmigration.microsoft.com/api/download/windows/AppServiceMigrationAssistant.msi', 'C:\AppServiceMigrationAssistant.msi')
 # Download Edge 
-(New-Object System.Net.WebClient).DownloadFile('http://go.microsoft.com/fwlink/?LinkID=2093437', 'C:\MicrosoftEdgeEnterpriseX64.msi')
+(New-Object System.Net.WebClient).DownloadFile('https://go.microsoft.com/fwlink/?LinkID=2093437', 'C:\MicrosoftEdgeEnterpriseX64.msi')
 # Download 3.1.4 SDK
 (New-Object System.Net.WebClient).DownloadFile('https://download.visualstudio.microsoft.com/download/pr/70062b11-491c-403c-91db-9d84462ee292/5db435e39128cbb608e76bf5111ab3dc/dotnet-sdk-3.1.413-win-x64.exe', 'C:\dotnet-sdk-3.1.413-win-x64.exe')
 
@@ -98,6 +98,5 @@ Start-Process -file 'C:\Git-2.30.0.2-64-bit.exe' -arg '/VERYSILENT /SUPPRESSMSGB
 
 # Install VS Code
 Wait-Install
-(New-Object System.Net.WebClient).DownloadFile('https://go.microsoft.com/fwlink/?LinkID=623230', 'C:\vscode.exe')
+(New-Object System.Net.WebClient).DownloadFile('https://code.visualstudio.com/sha/download?build=stable&os=win32-x64', 'C:\vscode.exe')
 Start-Process -file 'C:\vscode.exe' -arg '/VERYSILENT /SUPPRESSMSGBOXES /LOG="C:\vscode_install.txt" /NORESTART /FORCECLOSEAPPLICATIONS /mergetasks="!runcode,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' -passthru | wait-process
-

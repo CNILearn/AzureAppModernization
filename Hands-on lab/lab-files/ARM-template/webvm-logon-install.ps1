@@ -19,7 +19,7 @@ function Wait-Install {
         Start-Sleep -Seconds 1
     }
 }
-$branchName = "main"
+$branchName = "2023"
 # Install App Service Migration Assistant
 Wait-Install
 Write-Host "Installing App Service Migration Assistant..."
