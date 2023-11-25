@@ -88,9 +88,9 @@ function Waitfor-Database {
     # Wait for the database to be online
     do {
         $status = Invoke-Sqlcmd -Query "SELECT DATABASEPROPERTYEX('master', 'STATUS')" -ServerInstance $serverName
-        Write-Host "The database is $($status.Status). Waiting for it to be online..."
+        Write-Host "The database is $($status[0]). Waiting for it to be online..."
         Start-Sleep -Seconds 1
-    } until ($status.Status -eq "ONLINE")
+    } until ($status[0] -eq "ONLINE")
     
     Write-Host "The database is now online."
 }
