@@ -280,7 +280,7 @@ The next step of Part Unlimited's migration project is the assessment and migrat
 
 ### Task 1: Perform assessment for migration to Azure SQL Database
 
-Parts Unlimited would like an assessment to see what potential issues they might need to address in moving their database to Azure SQL Database. In this task, you will use the [Microsoft Data Migration Assistant](https://docs.microsoft.com/sql/dma/dma-overview?view=sql-server-2017) (DMA) to assess the `PartsUnlimited` database against Azure SQL Database (Azure SQL DB). Data Migration Assistant (DMA) enables you to upgrade to a modern data platform by detecting compatibility issues that can impact database functionality on your new version of SQL Server or Azure SQL Database. It recommends performance and reliability improvements for your target environment. The assessment generates a report detailing any feature parity and compatibility issues between the on-premises database and the Azure SQL DB service.
+Parts Unlimited would like an assessment to see what potential issues they might need to address in moving their database to Azure SQL Database. In this task, you will use the [Microsoft Data Migration Assistant](https://learn.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-2017) (DMA) to assess the `PartsUnlimited` database against Azure SQL Database (Azure SQL DB). Data Migration Assistant (DMA) enables you to upgrade to a modern data platform by detecting compatibility issues that can impact database functionality on your new version of SQL Server or Azure SQL Database. It recommends performance and reliability improvements for your target environment. The assessment generates a report detailing any feature parity and compatibility issues between the on-premises database and the Azure SQL DB service.
 
 > **Note**: You should have completed step to log into the WebVM. The source database is now available. The Database Migration Assistant is already downloaded on your SqlServer2008 VM. It can be downloaded through Azure Migrate or from the [Microsoft Download Center](https://go.microsoft.com/fwlink/?linkid=2090807) as well.
 
@@ -288,11 +288,15 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
    ![The SQLServer2008 virtual machine is highlighted in the list of resources.](media/find-sqlserver2008-resource.png "SqlServer2008 Selection")
 
-2. Open Windows explorer and install the migration assistant from `c:\DataMigrationAssistant.msi`.
+    > **Note**: There is a known issue with screen resolution when using an RDP connection to Windows Server 2008 R2, which may affect some users. This issue presents itself as very small, hard-to-read text on the screen. The workaround for this is to use a second monitor for the RDP display, allowing you to scale up the resolution to make the text larger.   
 
-3. Launch DMA from the Windows desktop icon or Start menu by typing "data migration" into the search bar and then selecting **Microsoft Data Migration Assistant** in the search results.
+2. Download the Edge browser and set it as default browser https://www.microsoft.com/en-us/edge/download
 
-    > **Note**: There is a known issue with screen resolution when using an RDP connection to Windows Server 2008 R2, which may affect some users. This issue presents itself as very small, hard-to-read text on the screen. The workaround for this is to use a second monitor for the RDP display, allowing you to scale up the resolution to make the text larger.
+3. Download the .NET Framework 4.8 Runtime from https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-web-installer. This is required by the Data Migration Assistant.
+
+4. Download and install the migration assistant from https://go.microsoft.com/fwlink/?linkid=2090807
+
+5. Launch DMA from the Windows desktop icon or Start menu by typing "data migration" into the search bar and then selecting **Microsoft Data Migration Assistant** in the search results.
 
    ![In the Windows Start menu, "data migration" is entered into the search bar, and Microsoft Data Migration Assistant is highlighted in the Windows start menu search results.](media/windows-start-menu-dma.png "Data Migration Assistant")
 
@@ -339,11 +343,11 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
     ![Start assessment](media/dma-start-assessment-to-azure-sql-db.png "Start assessment")
 
-13. Take a moment to review the assessment for migrating to Azure SQL DB. The SQL Server feature parity report **(1)** shows that Analysis Services and SQL Server Reporting Services are unsupported **(2)**, but these do not affect any objects in the `PartsUnlimited` database, so they won't block a migration.
+13. Take a moment to review the assessment for migrating to Azure SQL DB. The SQL Server feature parity report shows that there are not SQL Server feature parity issues with the SQL Server instance.
 
-    ![The feature parity report is displayed, and the two unsupported features are highlighted.](media/dma-feature-parity-report.png "Feature parity")
+    ![The feature parity report is displayed.](media/dma-feature-parity-report.png "Feature parity")
 
-14. Now, select **Compatibility issues (1)** so you can review that report as well.
+14. Now, select **Compatibility issues** so you can review that report as well.
 
     ![The Compatibility issues option is selected and highlighted.](media/dma-compatibility-issues.png "Compatibility issues")
 
