@@ -20,7 +20,7 @@ The names of manufacturers, products, or URLs are provided for informational pur
 
 © 2021 Microsoft Corporation. All rights reserved.
 
-Updates by CN innovation
+Nov-2023 updates by (C) CN innovation
 
 Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -112,7 +112,7 @@ In this task, you run an Azure Resource Manager (ARM) template to deploy and con
   - SQL Server Management Studio
   - Git Tools
   - Visual Studio Code installed and configured
-- A SQL Server 2008 R2 VM with the Microsoft Data Migration Assistant (DMA) installed and configured to work with Parts Unlimited E-Commerce site.
+- A SQL Server 2017 Windows Server 2016 VM with the Microsoft Data Migration Assistant (DMA) installed and configured to work with Parts Unlimited E-Commerce site.
 - Azure SQL Database
 - Azure Database Migration Service (DMS)
 - Azure App Service Plan
