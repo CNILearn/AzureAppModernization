@@ -172,7 +172,7 @@
                     },
                     "imageReference": {
                         "publisher": "MicrosoftSQLServer",
-                        "offer": "SQL2017-WS216",
+                        "offer": "SQL2017-WS2016",
                         "sku": "Standard",
                         "version": "latest"
                     }
