@@ -1,16 +1,8 @@
 ![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
-<div class="MCWHeader1">
-App modernization
-</div>
+# App modernization hands-on lab step-by-step guide
 
-<div class="MCWHeader2">
-Hands-on lab step-by-step guide
-</div>
-
-<div class="MCWHeader3">
 November 2023
-</div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
 
@@ -276,21 +268,19 @@ After reviewing the assessment results, you have ensured the web application is 
 
 Duration: 55 minutes
 
-The next step of Part Unlimited's migration project is the assessment and migration of its database. Currently, the database lives on a SQL Server 2008 R2 on a virtual machine. You will use an **Azure Migrate: Database Assessment** tool called **Microsoft Data Migration Assistant (DMA)** to assess the `PartsUnlimited` database for a migration to Azure SQL Database. The assessment generates a report detailing any feature parity and compatibility issues between the on-premises database and Azure SQL Database. After the assessment, you will use an **Azure Migrate: Database Migration** service called **Azure Database Migration Service (DMS)**. During the exercise, you will use a simulated on-premises environment hosted in virtual machines running on Azure.
+The next step of Part Unlimited's migration project is the assessment and migration of its database. Currently, the database lives on a SQL Server 2017 on a virtual machine. You will use an **Azure Migrate: Database Assessment** tool called **Microsoft Data Migration Assistant (DMA)** to assess the `PartsUnlimited` database for a migration to Azure SQL Database. The assessment generates a report detailing any feature parity and compatibility issues between the on-premises database and Azure SQL Database. After the assessment, you will use an **Azure Migrate: Database Migration** service called **Azure Database Migration Service (DMS)**. During the exercise, you will use a simulated on-premises environment hosted in virtual machines running on Azure.
 
 ### Task 1: Perform assessment for migration to Azure SQL Database
 
 Parts Unlimited would like an assessment to see what potential issues they might need to address in moving their database to Azure SQL Database. In this task, you will use the [Microsoft Data Migration Assistant](https://learn.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-2017) (DMA) to assess the `PartsUnlimited` database against Azure SQL Database (Azure SQL DB). Data Migration Assistant (DMA) enables you to upgrade to a modern data platform by detecting compatibility issues that can impact database functionality on your new version of SQL Server or Azure SQL Database. It recommends performance and reliability improvements for your target environment. The assessment generates a report detailing any feature parity and compatibility issues between the on-premises database and the Azure SQL DB service.
 
-> **Note**: You should have completed step to log into the WebVM. The source database is now available. The Database Migration Assistant is already downloaded on your SqlServer2008 VM. It can be downloaded through Azure Migrate or from the [Microsoft Download Center](https://go.microsoft.com/fwlink/?linkid=2090807) as well.
+> **Note**: You should have completed step to log into the WebVM. The source database is now available. The Database Migration Assistant is already downloaded on your SqlServer20017 VM. It can be downloaded through Azure Migrate or from the [Microsoft Download Center](https://go.microsoft.com/fwlink/?linkid=2090807) as well.
 
-1. Connect to your SqlServer2008 VM with RDP. Your credentials are the same as the WebVM , `demouser` with `Password.1!!` password.
+1. Connect to your SqlServer2017 VM with RDP. Your credentials are the same as the WebVM , `demouser` with `Password.1!!` password.
 
-   ![The SQLServer2008 virtual machine is highlighted in the list of resources.](media/find-sqlserver2008-resource.png "SqlServer2008 Selection")
+   ![The SQLServer2017 virtual machine is highlighted in the list of resources.](media/find-sqlserver2017-resource.png "SqlServer2017 Selection") 
 
-    > **Note**: There is a known issue with screen resolution when using an RDP connection to Windows Server 2008 R2, which may affect some users. This issue presents itself as very small, hard-to-read text on the screen. The workaround for this is to use a second monitor for the RDP display, allowing you to scale up the resolution to make the text larger.   
-
-2. Download the Edge browser and set it as default browser https://www.microsoft.com/en-us/edge/download
+2. If the Edge browser is not installed, download, install, and set as default browser https://www.microsoft.com/en-us/edge/download
 
 3. Download the .NET Framework 4.8 Runtime from https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-web-installer. This is required by the Data Migration Assistant.
 
@@ -316,15 +306,15 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
 6. Select **Create (2)**.
 
-7. On the **Options** screen, ensure **Check database compatibility (1)** and **Check feature parity (1)** are both checked, and then select **Next (2)**.
+7. On the **Options** screen, ensure **Check database compatibility** and **Check feature parity** are both checked, and then select **Next**.
 
    ![Check database compatibility and check feature parity are checked on the Options screen.](media/dma-options.png "DMA options")
 
 8. On the **Sources** screen, select **Add sources**.
 
-9. Connect to the local SQL Server named SQLSERVER2008. Enter the following into the **Connect to a server** dialog that appears on the right-hand side:
+9. Connect to the local SQL Server named SQLSERVER2017. Enter the following into the **Connect to a server** dialog that appears on the right-hand side:
 
-    - **Server name (1)**: Enter **SQLSERVER2008**.
+    - **Server name (1)**: Enter **SQLSERVER2017**.
     - **Authentication type (2)**: Select **SQL Server Authentication**.
     - **Username (3)**: Enter **PUWebSite**
     - **Password (4)**: Enter **{YOUR-ADMIN-PASSWORD}** `Password.1!!`
@@ -335,7 +325,7 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
 10. Select **Connect (6)**.
 
-11. On the **Add sources** dialog that appears next, check the box for `PartsUnlimited` **(1)** and select **Add (2)**.
+11. On the **Add sources** dialog that appears next, check the box for `PartsUnlimited` and select **Add**.
 
     ![The PartsUnlimited box is checked on the Add sources dialog.](media/dma-add-sources.png "Add sources")
 
@@ -377,15 +367,15 @@ Parts Unlimited would like an assessment to see what potential issues they might
 
 ### Task 2: Retrieve connection information for SQL Databases
 
-In this task, you will retrieve the IP address of the SqlServer2008 VM and the Fully Qualified Domain Name for the Azure SQL Database. This information is needed to connect to your SqlServer2008 VM and Azure SQL Database from Azure Data Migration Service and Azure Data Migration Assistant.
+In this task, you will retrieve the IP address of the SqlServer2017 VM and the Fully Qualified Domain Name for the Azure SQL Database. This information is needed to connect to your SqlServer2017 VM and Azure SQL Database from Azure Data Migration Service and Azure Data Migration Assistant.
 
-1. In the [Azure portal](https://portal.azure.com), navigate to your **SqlServer2008-ip** resource by selecting **Resource groups** from the Azure services list, selecting the **hands-on-lab-SUFFIX** resource group, and selecting the **SqlServer2008-ip** Public IP address from the list of resources.
+1. In the [Azure portal](https://portal.azure.com), navigate to your **SqlServer2017-ip** resource by selecting **Resource groups** from the Azure services list, selecting the **hands-on-lab-SUFFIX** resource group, and selecting the **SqlServer2017-ip** Public IP address from the list of resources.
 
-    ![The SqlServer2008-ip IP address is highlighted in the list of resources.](media/sqlip-selection.png "SqlServer2008 public IP resource")
+    ![The SqlServer2017-ip IP address is highlighted in the list of resources.](media/sqlip-selection.png "SqlServer2017 public IP resource")
 
 2. In the **Overview** blade, select **Copy** to copy the public IP address and paste the value into a text editor, such as Notepad.exe, for later reference.
 
-    ![SqlServer2008-ip resource is open. Public IP Address copy button is highlighted.](media/sqlip-copy-public-ip.png "SqlServer2008 public IP")
+    ![SqlServer2017-ip resource is open. Public IP Address copy button is highlighted.](media/sqlip-copy-public-ip.png "SqlServer2017 public IP")
 
 3. Go back to the resource list and navigate to your **SQL database** resource by selecting the **parts** SQL database resource from the resources list.
 
@@ -401,7 +391,7 @@ In this task, you will retrieve the IP address of the SqlServer2008 VM and the F
 
 After reviewing the assessment results and ensuring the database is a candidate for migration to Azure SQL Database, use the Data Migration Assistant to migrate the schema to Azure SQL Database.
 
-1. On the SqlServer2008 VM, return to the Data Migration Assistant and select the New **(+)** icon in the left-hand menu.
+1. On the SqlServer2017 VM, return to the Data Migration Assistant and select the New **(+)** icon in the left-hand menu.
 
 2. In the New project dialog, enter the following:
 
@@ -417,7 +407,7 @@ After reviewing the assessment results and ensuring the database is a candidate 
 
 4. On the **Select source** tab, enter the following:
 
-   - **Server name (1)**: Enter **SQLSERVER2008**.
+   - **Server name (1)**: Enter **SQLSERVER2017**.
    - **Authentication type (2)**: Select **SQL Server Authentication**.
    - **Username (3)**: Enter **PUWebSite**
    - **Password (4)**: Enter **{YOUR-ADMIN-PASSWORD}** `Password.1!!`
@@ -457,9 +447,7 @@ After reviewing the assessment results and ensuring the database is a candidate 
 
     ![The schema deployment results are displayed, with 23 commands executed and 0 errors highlighted.](media/data-migration-assistant-migration-deployment-results.png "Schema deployment results")
 
-12. Launch SQL Server Management Studio (SSMS) on the SqlServer2008 VM from the Windows Start menu by typing "sql server management" **(1)** into the search bar and then selecting **SQL Server Management Studio 17 (2)** in the search results.
-
-    ![In the Windows Start menu, "sql server management" is entered into the search bar, and SQL Server Management Studio 17 is highlighted in the Windows start menu search results.](media/smss-windows-search.png "SQL Server Management Studio 17")
+12. Launch SQL Server Management Studio (SSMS) on the SqlServer2017 VM from the Windows Start menu by typing "sql server management" into the search bar and then selecting **SQL Server Management Studio 19** in the search results.
 
 13. Connect to your Azure SQL Database by selecting **Connect->Database Engine** in the Object Explorer and then entering the following into the Connect to server dialog:
 
@@ -481,11 +469,13 @@ After reviewing the assessment results and ensuring the database is a candidate 
 
 At this point, you have migrated the database schema using DMA. In this task, you migrate the data from the `PartsUnlimited` database into the latest Azure SQL Database using the Azure Database Migration Service.
 
-> The [Azure Database Migration Service](https://docs.microsoft.com/azure/dms/dms-overview) integrates some of the functionality of Microsoft's existing tools and services to provide customers with a comprehensive, highly available database migration solution. The service uses the Data Migration Assistant to generate assessment reports that provide recommendations to guide you through the changes required before performing a migration. When you're ready to begin the migration process, Azure Database Migration Service conducts all necessary steps.
+Instead of using the classic Azure Database Migration Service, a new offering is available as well. The new offering offers migration to target virtual machines, Managed Instances, and SQL Azure. The SQL Azure offering requires in the preview a self-hosted runtime which needs to be setup. This is not required with the other targets.
 
-1. In the [Azure portal](https://portal.azure.com), navigate to your Azure Database Migration Service by selecting **Resource groups** from the Azure services list, selecting the **hands-on-lab-SUFFIX** resource group, and then selecting the **contoso-dms-UniqueId** Azure Database Migration Service in the list of resources.
+> The [Azure Database Migration Service (Classic)](https://docs.microsoft.com/azure/dms/dms-overview) integrates some of the functionality of Microsoft's existing tools and services to provide customers with a comprehensive, highly available database migration solution. The service uses the Data Migration Assistant to generate assessment reports that provide recommendations to guide you through the changes required before performing a migration. When you're ready to begin the migration process, Azure Database Migration Service conducts all necessary steps.
 
-   ![The contoso-dms Azure Database Migration Service is highlighted in the list of resources in the hands-on-lab-SUFFIX resource group.](media/resource-group-dms-resource.png "Resources")
+1. In the [Azure portal](https://portal.azure.com), navigate to your Azure Database Migration Service by selecting **Resource groups** from the Azure services list, selecting the **hands-on-lab-SUFFIX** resource group, and then selecting the **parts-dms-UniqueId** Azure Database Migration Service in the list of resources.
+
+   ![The parts-dms Azure Database Migration Service is highlighted in the list of resources in the hands-on-lab-SUFFIX resource group.](media/resource-group-dms-resource.png "Resources")
 
 2. On the Azure Database Migration Service blade, select **+New Migration Project**.
 
