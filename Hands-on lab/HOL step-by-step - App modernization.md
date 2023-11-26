@@ -661,7 +661,9 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
 
     ![PowerShell terminal is shown. Git remote add origin is highlighted and executed. ](media/git-remote-add.png "Git remote add")
 
-9. Run the following commands to rename the current branch to **Main** and stage all the files for a git commit.
+9. Run the following commands to rename the current branch to **main** (if it is not already named *main*, and stage all the files for a git commit. 
+
+| The source code repository already includes a *.gitignore* file. If this wouldn't be the case, you can create one using `dotnet new gitignore`
 
     ```powershell
     git branch -M main
@@ -709,7 +711,7 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
 
    ![The search box for resources is filled in with partsunlimited-web. The partsunlimited-web-20 Azure App Service is highlighted in the list of resources in the hands-on-lab-SUFFIX resource group.](media/resource-group-appservice-resource.png "Resources")
 
-2. Switch to the **Deployment slots (1)** tab and select **Add Slot (2)**.
+2. Switch to the **Deployment slots** tab and select **Add Slot**.
 
     ![App Service Deployment Slots tab is open. Add slot button highlighted.](media/app-service-add-deployment-slot.png "Deployment slots")
 
@@ -717,7 +719,7 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
 
     ![Add a slot panel is open. The name is set staging. Partsunlimited-web-20 is selected for the clone settings from the dropdown list. Add button is highlighted.](media/app-service-staging-slot.png "Adding deployment slot")
 
-4. Once you receive the success message, close **(1)** the panel. Observe **(2)** the two environments we have for the App Service in the deployment slots list.
+4. Once you receive the success message, close the panel. Observe the two environments we have for the App Service in the deployment slots list.
 
     ![Successfully created slot staging message is shown. The close button is highlighted. The current list of slots is presented.](media/app-service-staging-slot-added.png "Deployment slots")
 
@@ -727,7 +729,7 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
 
     ![Deployment slots are listed. Staging slot named partsunlimited-web-20-staging is highlighted.](media/app-service-staging-select.png "Staging deployment slot")
 
-2. From the toolbar menu, select **Get publish profile**. The publish profile is used to authenticate between GitHub and Azure.
+2. From the toolbar menu, select **Download publish profile**. The publish profile is used to authenticate between GitHub and Azure.
 
     ![The staging app service slot screen displays with the Get publish profile button highlighted on the toolbar.](media/retrieve_staging_publish_profile.png "Staging Publish Profile")
 
@@ -735,11 +737,10 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
 
 4. In a web browser, return to the GitHub repository for this lab, and select the **Settings** tab.
 
-    ![The GitHub repository web page displays with Settings highlighted in the toolbar.](media/github_settings_tab.png "GitHub Repository Settings Menu")
+5. From the left menu, select **Secrets and variables**. Click **Actions**, then click **New repository secret**.
 
-5. From the left menu, select **Secrets**. Then, select **New repository secret**.
+    ![The Secrets item is selected in the left menu and the New repository secret button is highlighted..](media/github_settings_tab.png "GitHub Repository Settings Menu")
 
-    ![The Secrets item is selected in the left menu and the New repository secret button is highlighted.](media/github_repository_add_secret.png "New repository secret")
 
 6. Enter the following values in the **New secret** form, then select **Add secret**.
 
@@ -754,11 +755,13 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
 
     ![The GitHub repository page displays with the Actions menu item highlighted.](media/github_actions_menu.png "Actions Menu")
 
-8. On the **Get started with GitHub Actions** screen, select the **set up a workflow yourself** link.
+8. On the **Get started with GitHub Actions** screen, select a .NET workflow (the code will be replaced later), and click Configure.
 
-    ![The Get started with GitHub Actions screen displays with the set up a workflow yourself link highlighted.](media/github_setupworkflowyourself.png "Set up a workflow yourself")
+    ![The Get started with GitHub Actions screen displays with the set up a workflow yourself link.](media/github_setupworkflowyourself.png "Set up a workflow yourself")
 
-9. On the workflow editor screen, provide the file name **stagingdeploy.yml**. Commit your changes by selecting the Start Commit button.
+    ![The .NET workflow is selected and the Configure workflow button is highlighted.](media/github_configuredotnet.png "Configure .NET workflow")
+
+9. On the workflow editor screen, provide the file name **stagingdeploy.yml**. Commit your changes by selecting the **Commit changes...** button.
 
     ![The workflow editor screen displays with the file name set to stagingdeploy.yml](media/github_workflownaming.png "Workflow naming")
 
@@ -782,7 +785,7 @@ In this exercise, you will move the codebase to a GitHub Repo, create a staging 
     ```cmd
         cd C:\MCW\MCW-App-modernization-main\Hands-on lab\lab-files\src
         git add .
-        git commit -am "Updated the stagingdeploy.yml with my changes"
+        git commit -m "Updated the stagingdeploy.yml" -m "publish to staging"
         git push 
     ```
 
