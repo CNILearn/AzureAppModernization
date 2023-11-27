@@ -108,7 +108,7 @@ Finally, Parts Unlimited is looking to invest in DevOps practices to decrease hu
 
 Design a solution and prepare to present the solution to the target customer audience in a 15-minute chalk-talk format.
 
-Timeframe: 60 minutes
+Timeframe: 45 minutes
 
 **Business needs**
 
@@ -164,39 +164,17 @@ Directions: As a team:
 
 3. Determine how you will respond to the customer's objections.
 
-Prepare a 15-minute chalk-talk style presentation to the customer.
+Prepare a 5-minute chalk-talk style presentation to the customer.
 
 ## Step 3: Present the solution
 
 **Outcome**
 
-Present a solution to the target customer audience in a 15-minute chalk-talk format.
-
-Timeframe: 30 minutes
-
-**Presentation**
-
-Directions:
-
-1. Pair with another team.
-
-2. One group is the Microsoft team, the other is the customer.
-
-3. The Microsoft team presents their proposed solution to the customer.
-
-4. The customer makes one of the objections from the list of objections.
-
-5. The Microsoft team responds to the objection.
-
-6. The customer team gives feedback to the Microsoft team.
-
-7. Switch roles and repeat Steps 2-6.
+Present a solution to the target customer audience in a 5-minute chalk-talk format.
 
 ##  Wrap-up 
 
-Timeframe: 15 minutes
-
-Directions: Reconvene with the larger group to hear the facilitator/SME share the preferred solution for the case study.
+Discuss the proposed solution with the larger group.
 
 ## Additional references
 
