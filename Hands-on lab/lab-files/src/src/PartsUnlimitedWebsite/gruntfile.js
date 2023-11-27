@@ -84,12 +84,11 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks("grunt-bower-task");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-sass');
 
-    grunt.registerTask("default", ["bower:install", "copy", "sass", "concat", "uglify"]);
+    grunt.registerTask("default", ["copy", "sass", "concat", "uglify"]);
     grunt.registerTask("copy-all", ["copy", "sass", "concat", "uglify"]);
 };
